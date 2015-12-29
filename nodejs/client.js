@@ -1,5 +1,7 @@
 var http=require('http');
 
+for(var i = 0; i< 10; i++){
+
 //make the request object
 var request = http.request({
   'host': 'localhost',
@@ -7,7 +9,9 @@ var request = http.request({
   'method': 'GET',
   'path': '/getDict/level'
 });
-
+var time = new Date();
+console.log(time.getUTCSeconds() + ":" + time.getUTCMilliseconds());
+//read request
 //assign callbacks
 request.on('response', function(response) {
    console.log('Response status code:'+response.statusCode);
@@ -20,40 +24,22 @@ request.on('response', function(response) {
    });
    	response.on('end', function(){
    		console.log('ended');
+   		time = new Date();
+console.log(time.getUTCSeconds() + ":" + time.getUTCMilliseconds());
    	});
 });
 
 request.end();
-
-var request = require('request');
-request.post({url:'http://localhost:8080/setDict/level',
-	 form: {high: 2 }},
-	function(error, response, body){
-		if(!error && response.statusCode === 200){
-			console.log(body);
-		}
-		if(error){
-			console.log(error);
-		}
-	});
-// //Load the request module
+}
+//post request
 // var request = require('request');
-
-// //Lets configure and request
-// request({
-//     url: 'https://localhost:8080/setDict/level', //URL to hit
-//     // qs: {from: 'blog example', time: +new Date()}, //Query string data
-//     method: 'POST',
-//     //Lets post the following key/values as form
-//     // json: {
-//     //     field1: 'data',
-//     //     field2: 'data'
-//     // }
-// }, function(error, response, body){
-//     if(error) {
-//         console.log('error2'+error);
-//     } else {
-//         console.log(response.statusCode, body);
-// }
-// });
-console.log('running client');
+// request.post({url:'http://localhost:8080/setDict/level',
+// 	 form: {high: 2 }},
+// 	function(error, response, body){
+// 		if(!error && response.statusCode === 200){
+// 			console.log(body);
+// 		}
+// 		if(error){
+// 			console.log(error);
+// 		}
+// 	});
