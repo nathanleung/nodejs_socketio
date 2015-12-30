@@ -3,8 +3,16 @@
     <head>
         <title>Node Client and Server</title>
         <script src="client.js"></script>
+  		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     </head>
     <body>
         <h1>Node Client Side</h1>
+        <script>
+    	$(function(){
+			var nodeClient = new NodeJsClient();
+			nodeClient.http = require('http');
+			var timer = setInterval(nodeClient.setUpGetRequestHandler.bind(nodeClient), 1000);
+		})
+        </script>
     </body>
 </html>

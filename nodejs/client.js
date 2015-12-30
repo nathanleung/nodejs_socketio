@@ -1,5 +1,7 @@
 function NodeJsClient(){
 	this.http = require('http');
+	this.timer = null;
+	this.timeoutPeriod = 1000;
 }
 
 NodeJsClient.prototype.setUpGetRequestHandler = function() {
@@ -20,8 +22,9 @@ NodeJsClient.prototype.onGetResponse = function(response) {
 	response.on('error', function(errorString){
 		console.log('Error'+errorString);
 	});
-   	response.on('end', function(){
-   	});
+   	response.on('end', (function(){
+		this.timer = setTimeout(this.setUpGetRequestHandler.bind(this), this.timeoutPeriod);
+   	}).bind(this));
 };
 
 NodeJsClient.prototype.setUpPostRequest = function(){
@@ -40,4 +43,4 @@ NodeJsClient.prototype.setUpPostRequest = function(){
 }
 
 var nodeClient = new NodeJsClient();
-var timer = setInterval(nodeClient.setUpGetRequestHandler.bind(nodeClient), 1000);
+nodeClient.timer = setTimeout(nodeClient.setUpGetRequestHandler.bind(nodeClient), nodeClient.timeoutPeriod);
