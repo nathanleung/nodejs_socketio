@@ -1,12 +1,15 @@
 define(["../helpers"], function(helpersLib){
 
-	function SocketIOServer(){
+	function SocketIOServer(timerCalc){
 		this.app = require('express')();
 		this.http = require('http').Server(this.app);
 		this.io = require('socket.io')(this.http);
 		this.accuracyValue = 0;
 		this.isIncreasing = true;
 		this.stepFunctionHelper = helpersLib.stepFunctionForAccuracyValue;
+		this.timerCalc = timerCalc;
+		this.requestNumber = 0;
+		this.responseNumber = 0;
 	};
 
 	SocketIOServer.prototype.startServer = function(){
@@ -30,13 +33,22 @@ define(["../helpers"], function(helpersLib){
 	};
 
 	SocketIOServer.prototype.socketConnectionCallback = function(socket){
+		if(this.timerCalc.responseNumber == this.responseNumber){
+			this.timerCalc.endOfRequest = this.timerCalc.getCurrentTime();
+			this.responseNumber++;
+		}
 		console.log('a user connected');
+		this.timerCalc.calculateRequestTime();
 		socket.on('disconnect', function(){
 			console.log('user disconnected');
 		});
 		socket.on('modify data', function(msg){
 			console.log('message: '+msg);
 		});
+		//send this response
+		if(this.timerCalc.responseNumber == this.responseNumber){
+			this.timerCalc.startOfResponse = this.timerCalc.getCurrentTime();
+		}
 		//only if it si different
 		this.io.emit('value changed', this.accuracyValue);
 	};
@@ -46,6 +58,7 @@ define(["../helpers"], function(helpersLib){
 			this.isIncreasing);
 		this.accuracyValue = stepObj.value;
 		this.isIncreasing = stepObj.isIncreasing;
+		this.timerCalc.startOfEmit = this.timerCalc.getCurrentTime();
 		//only if it is different
 		this.io.emit('value changed', this.accuracyValue);
 	};

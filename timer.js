@@ -4,6 +4,8 @@ define(function(){
 		this.endOfResponse = 0;
 		this.startOfRequest = 0;
 		this.endOfRequest = 0;
+		this.startOfEmit = 0;
+		this.endOfEmit = 0;
 		this.requestNumber = 0;
 		this.responseNumber = 0;
 		this.time = null;
@@ -29,6 +31,10 @@ define(function(){
 
 	Timer.prototype.calculateTotalTime = function(){
 		console.log(this.responseNumber+":total time: "+parseInt(this.endOfResponse - this.startOfRequest));
+	}
+
+	Timer.prototype.calculateEmitTime = function(){
+		console.log(this.responseNumber+":emit time: "+parseInt(this.endOfEmit - this.startOfEmit));
 	}
 
 	return {

@@ -33,7 +33,6 @@ define(function(){
 			this.requestNumber++;
 			if(this.timerCalc.responseNumber == this.requestNumber){
 				this.timerCalc.endOfResponse = this.timerCalc.getCurrentTime();
-				// console.log(this.timerCalc.endOfResponse);
 			}
 			this.timerCalc.calculateResponseTime();
 			this.timerCalc.calculateTotalTime();

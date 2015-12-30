@@ -24,19 +24,15 @@ define(["../helpers"], function(helperFunctions){
 		//handle get request
 		if(request.method == 'GET'){
 			if(this.timerCalc.responseNumber == this.responseNumber){
-			// console.log(this.timerCalc.startOfReponse);
 				this.timerCalc.endOfRequest = this.timerCalc.getCurrentTime();
-			// console.log(this.timerCalc.endOfRequest-this.timerCalc.startOfRequest);
 				this.responseNumber++;
 			}
 			this.timerCalc.calculateRequestTime();
 			//function called when request is received
 			response.writeHead(200, {'Content-Type': 'text/plain'});
 			//send this response
-			// console.log(response.header);
 			if(this.timerCalc.responseNumber == this.responseNumber){
 				this.timerCalc.startOfResponse = this.timerCalc.getCurrentTime();
-				// console.log(this.timerCalc.startOfResponse);
 			}
 			response.end(this.accuracyValue.toString());
 		}
