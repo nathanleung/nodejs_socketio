@@ -11,7 +11,6 @@ define(function(){
 	NodeJsClient.prototype.setUpGetRequestHandler = function() {
 		if(this.timerCalc.requestNumber == this.requestNumber){
 			this.timerCalc.startOfRequest = this.timerCalc.getCurrentTime();
-			// console.log(this.timerCalc.startOfRequest);
 		}
 		this.request = this.http.request({
 		  'host': 'localhost',
