@@ -11,6 +11,7 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "express": "~4.13.3",
-    "async": "~1.5.0"
+    "async": "~1.5.0",
+    "requirejs": "~2.1.22"
   }
 }
